@@ -1,0 +1,196 @@
+[
+    {
+        "id": "f8e5b661da2d0267",
+        "type": "tab",
+        "label": "流程1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "117e5ba45f1edd68",
+        "type": "buffer-parser",
+        "z": "f8e5b661da2d0267",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "specification": "spec",
+        "specificationType": "ui",
+        "items": [
+            {
+                "type": "bool",
+                "name": "bit0",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 0,
+                "scale": "1",
+                "mask": ""
+            },
+            {
+                "type": "bool",
+                "name": "bit1",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 1,
+                "scale": "1",
+                "mask": ""
+            },
+            {
+                "type": "bool",
+                "name": "bit2",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 2,
+                "scale": "1",
+                "mask": ""
+            },
+            {
+                "type": "bool",
+                "name": "bit3",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 3,
+                "scale": "1",
+                "mask": ""
+            },
+            {
+                "type": "bool",
+                "name": "bit4",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 4,
+                "scale": "1",
+                "mask": ""
+            },
+            {
+                "type": "bool",
+                "name": "bit5",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 5,
+                "scale": "1",
+                "mask": ""
+            },
+            {
+                "type": "bool",
+                "name": "bit6",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 6,
+                "scale": "1",
+                "mask": ""
+            },
+            {
+                "type": "bool",
+                "name": "bit7",
+                "offset": 1,
+                "length": 1,
+                "offsetbit": 7,
+                "scale": "1",
+                "mask": ""
+            }
+        ],
+        "swap1": "",
+        "swap2": "",
+        "swap3": "",
+        "swap1Type": "swap",
+        "swap2Type": "swap",
+        "swap3Type": "swap",
+        "msgProperty": "payload",
+        "msgPropertyType": "str",
+        "resultType": "keyvalue",
+        "resultTypeType": "return",
+        "multipleResult": false,
+        "fanOutMultipleResult": false,
+        "setTopic": true,
+        "outputs": 1,
+        "x": 515,
+        "y": 160,
+        "wires": [
+            [
+                "ceb61ccd1ead9b5c"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "a08f0c2a457949d5",
+        "type": "inject",
+        "z": "f8e5b661da2d0267",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 125,
+        "y": 160,
+        "wires": [
+            [
+                "4a5f6a2b652dce31"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "4a5f6a2b652dce31",
+        "type": "random",
+        "z": "f8e5b661da2d0267",
+        "name": "",
+        "low": 1,
+        "high": "255",
+        "inte": "true",
+        "property": "payload",
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "a3a4e5a4ae5c6d47"
+            ]
+        ]
+    },
+    {
+        "id": "ceb61ccd1ead9b5c",
+        "type": "debug",
+        "z": "f8e5b661da2d0267",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 585,
+        "y": 160,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "a3a4e5a4ae5c6d47",
+        "type": "function",
+        "z": "f8e5b661da2d0267",
+        "name": "to buffer",
+        "func": "var v1=[];\nv1.push(msg.payload);\n\nnode.status({text:v1[0].toString(2)});\n\nreturn {payload:v1};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 160,
+        "wires": [
+            [
+                "117e5ba45f1edd68"
+            ]
+        ]
+    }
+]
