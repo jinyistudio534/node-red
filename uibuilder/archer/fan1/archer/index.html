@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en"><head>
+    <style>
+        #container {    
+            position: absolute;    
+            width: 98%;
+            height: 82%;  
+            left:0px;
+            float:left;
+            margin:0px;
+            padding:0px;
+        }
+    
+        #error {
+            display: none;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../uibuilder/images/node-blue.ico">
+
+    <title>Modern IIFE client example - Node-RED uibuilder</title>
+    <meta name="description" content="Node-RED uibuilder - modern IIFE client example">
+
+    <!-- Your own CSS -->
+    <link type="text/css" rel="stylesheet" href="./index.css" media="all">
+
+    <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / - socket.io no longer needed  -->
+    <script defer src="../uibuilder/uibuilder.iife.min.js">/* THE UIBUILDER LIBRARY MUST BE IN THE HTML! DO NOT REMOVE */</script>
+    <script defer src="./index.js">/* OPTIONAL: Put your custom code in that */</script>
+    <script src='libs/jquery-3.5.1.js'></script>
+    <script src='libs/archer.min.js'></script>
+    <!-- #endregion -->
+    
+
+</head><body>
+    
+    <h1 class="with-subtitle">uibuilder Modern Client Example</h1>
+    <div role="doc-subtitle">Using the IIFE library.</div>  
+
+    <div id="container"></div>
+    
+    <div id="error">
+        <h1>The graphic files could not be loaded</h1>
+        <p>Please note that this example may only work when served through a web server. The example code needs to
+            dynamically load files which for security reasons is not allowed when serving from the file system.</p>
+    </div>
+
+    <script type="text/javascript"> 
+        var angel=0;
+        var turning=false;
+        /**
+        * Root location where your interactive graphic is stored.
+        * Leave empty to resolve paths relative from this HTML.
+        * Can also contain an absolute URL to the server where your graphic is stored, for example:
+        * http://my-domain.com/graphics/my-graphic/
+        */
+        var rootUrl = '';
+        
+        /**
+        * Location of the assets folder, by default resolved relative from root URL
+        */
+        var assetUrl = rootUrl + 'assets';
+        
+        /**
+        * Location of the SVG file, by default resolved relative from root URL
+        */
+        var graphicUrl = rootUrl + 'archer.graphic.svg';
+        
+        /**
+        * Location of the graphic configuration file, by default resolved relative from root URL
+        */
+        var configUrl = rootUrl + 'archer.config.json';
+        
+        /**
+        * The container HTML element in which to display the graphic
+        */
+        var container = document.getElementById('container');
+        
+        // Create a graphic instance over the container
+        var graphic = archer.create(container);
+        
+        // Tell the graphic where assets (e.g. images) are located
+        graphic.document.setAssetRoot(assetUrl);
+        
+        // Load graphic and configuration
+        graphic.loadUrl(graphicUrl, configUrl);
+        
+        // Wait until files are loaded
+        graphic.on('ready', function () {
+        
+            // Make graphic fit into container bounds
+            graphic.view.zoomToFit();
+        
+            // Enable zoom / pan with mouse
+            graphic.view.enableMouse(false, false);
+        
+            // Set variable values
+            graphic.setValue('turning', 0);
+            graphic.setValue('start', false);
+            graphic.setValue('stop', false);
+            graphic.setValue('start_in', false);
+            graphic.setValue('stop_in', false);
+        
+            // Add event listeners
+            // stop button
+            graphic.element('g4159').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                turning=false;
+                graphic.setValue('start', false);
+                graphic.setValue('stop', true);
+            });
+
+            graphic.element('g4159').on('mouseenter', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                graphic.setValue('stop_in', true);
+            });
+
+            graphic.element('g4159').on('mouseleave', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                graphic.setValue('stop_in', false);
+            });
+            // start button
+            graphic.element('g4164').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                turning=true;
+                graphic.setValue('start', true);
+                graphic.setValue('stop', false);
+            });
+            graphic.element('g4164').on('mouseleave', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                graphic.setValue('start_in', false);
+            });
+            graphic.element('g4164').on('mouseenter', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                graphic.setValue('start_in', true);
+            });
+            
+            function FanTurnin(start) {
+                turning=start;
+                graphic.setValue('start', start);
+                graphic.setValue('stop', !start);                    
+            }
+            
+            setInterval(function() {
+                if(turning) {
+                    angel=angel+10;
+                    if(angel>=360) {
+                        angel=0;
+                    };
+                    graphic.setValue('turning', angel);
+                };
+            }, 150);
+
+            // b4j_connect("/ws/boards/fan1");
+            uibuilder.onTopic('mytopic', (msg) => {
+                console.log('>> onTopic `mytopic` >>', this, msg.act)
+                if(msg.act=='start')
+                {
+                    FanTurnin(true);                    
+                }
+                if(msg.act=='stop')
+                {
+                     FanTurnin(false); 
+                }
+                // ... do something useful with the msg here ...
+            })
+        });
+        
+        // Files could not be loaded, maybe due to security restrictions
+        // Display error message
+        graphic.on('error', function() {
+            document.getElementById('error').style['display'] = 'block';
+        })        
+       
+    </script>
+    
+</body></html>
