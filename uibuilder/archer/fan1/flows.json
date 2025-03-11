@@ -1,0 +1,142 @@
+[
+    {
+        "id": "c27cf7e0275e8e37",
+        "type": "tab",
+        "label": "uiBuilder",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fb9848e67f79fd72",
+        "type": "debug",
+        "z": "c27cf7e0275e8e37",
+        "name": "control out",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "counter",
+        "x": 810,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f1c83cbd51e93f07",
+        "type": "debug",
+        "z": "c27cf7e0275e8e37",
+        "name": "standard out",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "4d511427eb639cf2",
+        "type": "inject",
+        "z": "c27cf7e0275e8e37",
+        "name": "start",
+        "props": [
+            {
+                "p": "act",
+                "v": "start",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "a15f4828f7a07644"
+            ]
+        ]
+    },
+    {
+        "id": "a51dfc8040b7d137",
+        "type": "inject",
+        "z": "c27cf7e0275e8e37",
+        "name": "stop",
+        "props": [
+            {
+                "p": "act",
+                "v": "stop",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "a15f4828f7a07644"
+            ]
+        ]
+    },
+    {
+        "id": "a15f4828f7a07644",
+        "type": "uib-sender",
+        "z": "c27cf7e0275e8e37",
+        "url": "fan1",
+        "uibId": "52151f55e6983887",
+        "name": "fan",
+        "topic": "mytopic",
+        "passthrough": false,
+        "return": false,
+        "outputs": 0,
+        "x": 330,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "52151f55e6983887",
+        "type": "uibuilder",
+        "z": "c27cf7e0275e8e37",
+        "name": "",
+        "topic": "",
+        "url": "fan1",
+        "okToGo": true,
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "iife-blank-client",
+        "extTemplate": "",
+        "showfolder": false,
+        "reload": false,
+        "sourceFolder": "src",
+        "deployedVersion": "7.1.0",
+        "showMsgUib": false,
+        "title": "",
+        "descr": "",
+        "editurl": "vscode://file\\Users\\info\\.node-red\\uibuilder/fan1/?windowId=_blank",
+        "x": 570,
+        "y": 120,
+        "wires": [
+            [
+                "f1c83cbd51e93f07"
+            ],
+            [
+                "fb9848e67f79fd72"
+            ]
+        ]
+    }
+]
