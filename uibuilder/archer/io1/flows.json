@@ -1,0 +1,316 @@
+[
+    {
+        "id": "e4146d22da54ad41",
+        "type": "tab",
+        "label": "redplc",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7a0021cb58116c64",
+        "type": "uibuilder",
+        "z": "e4146d22da54ad41",
+        "name": "",
+        "topic": "",
+        "url": "io1",
+        "okToGo": true,
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "blank",
+        "extTemplate": "",
+        "showfolder": false,
+        "reload": false,
+        "sourceFolder": "src",
+        "deployedVersion": "7.1.0",
+        "showMsgUib": false,
+        "title": "",
+        "descr": "",
+        "editurl": "vscode://file\\Users\\info\\.node-red\\uibuilder/io1/?windowId=_blank",
+        "x": 1130,
+        "y": 360,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7e2005c98c72b1af",
+        "type": "redplc-sys-rail",
+        "z": "e4146d22da54ad41",
+        "rtype": "1",
+        "outputs": 1,
+        "name": "",
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "a57764b75a68c856"
+            ]
+        ]
+    },
+    {
+        "id": "f50d1fb56009017d",
+        "type": "redplc-sys-inject",
+        "z": "e4146d22da54ad41",
+        "sdelay": 200,
+        "tupdate": 10,
+        "outputs": 8,
+        "x": 220,
+        "y": 400,
+        "wires": [
+            [
+                "7e2005c98c72b1af"
+            ],
+            [
+                "7f042124e993f544"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a57764b75a68c856",
+        "type": "redplc-timer",
+        "z": "e4146d22da54ad41",
+        "operation": "TPI",
+        "address": 0,
+        "timev": "500",
+        "timeu": "ms",
+        "persistent": 0,
+        "tpers": 20,
+        "name": "",
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "20d6c6fbc2a50989"
+            ]
+        ]
+    },
+    {
+        "id": "8c2c33fe013331eb",
+        "type": "redplc-sys-rail",
+        "z": "e4146d22da54ad41",
+        "rtype": "0",
+        "outputs": 0,
+        "name": "",
+        "x": 890,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "20d6c6fbc2a50989",
+        "type": "redplc-coil",
+        "z": "e4146d22da54ad41",
+        "operation": "ST",
+        "vartype": "M",
+        "address": 0,
+        "index": 0,
+        "counter": "R",
+        "timer": "R",
+        "fflop": "R",
+        "name": "",
+        "x": 750,
+        "y": 360,
+        "wires": [
+            [
+                "8c2c33fe013331eb"
+            ]
+        ]
+    },
+    {
+        "id": "9e2c086ce28afe4e",
+        "type": "redplc-m-memory",
+        "z": "e4146d22da54ad41",
+        "address": 0,
+        "persistent": 0,
+        "tupdate": 20,
+        "meminit": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "x": 300,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7f042124e993f544",
+        "type": "redplc-sys-rail",
+        "z": "e4146d22da54ad41",
+        "rtype": "1",
+        "outputs": 1,
+        "name": "",
+        "x": 430,
+        "y": 440,
+        "wires": [
+            [
+                "aff677f8696bd73c",
+                "e80ae016a68723c6"
+            ]
+        ]
+    },
+    {
+        "id": "aff677f8696bd73c",
+        "type": "redplc-contact",
+        "z": "e4146d22da54ad41",
+        "operation": "P",
+        "vartype": "M",
+        "address": 0,
+        "index": 0,
+        "counter": "QU",
+        "timer": "Q",
+        "fflop": "Q",
+        "name": "",
+        "x": 600,
+        "y": 440,
+        "wires": [
+            [
+                "1be1d13beeb0df8c"
+            ]
+        ]
+    },
+    {
+        "id": "e80ae016a68723c6",
+        "type": "redplc-contact",
+        "z": "e4146d22da54ad41",
+        "operation": "N",
+        "vartype": "M",
+        "address": 0,
+        "index": 0,
+        "counter": "QU",
+        "timer": "Q",
+        "fflop": "Q",
+        "name": "",
+        "x": 600,
+        "y": 520,
+        "wires": [
+            [
+                "8528552e96051bd9"
+            ]
+        ]
+    },
+    {
+        "id": "53d7973037440bb7",
+        "type": "uib-sender",
+        "z": "e4146d22da54ad41",
+        "url": "io1",
+        "uibId": "7a0021cb58116c64",
+        "name": "",
+        "topic": "led",
+        "passthrough": false,
+        "return": false,
+        "outputs": 0,
+        "x": 970,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "1be1d13beeb0df8c",
+        "type": "function",
+        "z": "e4146d22da54ad41",
+        "name": "led1, on",
+        "func": "if(msg.payload==true)\n{\n    return {'led':{'led1':true}};\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 440,
+        "wires": [
+            [
+                "53d7973037440bb7"
+            ]
+        ]
+    },
+    {
+        "id": "8528552e96051bd9",
+        "type": "function",
+        "z": "e4146d22da54ad41",
+        "name": "led1, off",
+        "func": "if(msg.payload==true)\n{\n    return {'led':{'led1':false}};\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 520,
+        "wires": [
+            [
+                "53d7973037440bb7"
+            ]
+        ]
+    }
+]
