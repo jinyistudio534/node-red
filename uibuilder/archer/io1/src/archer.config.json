@@ -1,0 +1,464 @@
+{
+  "variables": [
+    {
+      "name": "led0",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led1",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw0",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw1",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led2",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led3",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led4",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led5",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led6",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led7",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw2",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw3",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw4",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw5",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw6",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw7",
+      "type": "boolean",
+      "keyFrames": {}
+    }
+  ],
+  "transformations": [
+    {
+      "name": "fill-color_path397",
+      "type": "fill-color",
+      "element": "path397",
+      "variable": "led0",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_ellipse613",
+      "type": "fill-color",
+      "element": "ellipse613",
+      "variable": "led1",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "rotate_image701",
+      "type": "rotate",
+      "element": "image701",
+      "variable": "sw0",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image496",
+      "type": "rotate",
+      "element": "image496",
+      "variable": "sw1",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "fill-color_ellipse623",
+      "type": "fill-color",
+      "element": "ellipse623",
+      "variable": "led2",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_ellipse633",
+      "type": "fill-color",
+      "element": "ellipse633",
+      "variable": "led3",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_ellipse643",
+      "type": "fill-color",
+      "element": "ellipse643",
+      "variable": "led4",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_ellipse653",
+      "type": "fill-color",
+      "element": "ellipse653",
+      "variable": "led5",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_ellipse663",
+      "type": "fill-color",
+      "element": "ellipse663",
+      "variable": "led6",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_ellipse673",
+      "type": "fill-color",
+      "element": "ellipse673",
+      "variable": "led7",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#e6f0e6",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "rotate_image510",
+      "type": "rotate",
+      "element": "image510",
+      "variable": "sw2",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image524",
+      "type": "rotate",
+      "element": "image524",
+      "variable": "sw3",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image552",
+      "type": "rotate",
+      "element": "image552",
+      "variable": "sw4",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image566",
+      "type": "rotate",
+      "element": "image566",
+      "variable": "sw5",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image538",
+      "type": "rotate",
+      "element": "image538",
+      "variable": "sw6",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image580",
+      "type": "rotate",
+      "element": "image580",
+      "variable": "sw7",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": -80,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    }
+  ],
+  "elements": [
+    {
+      "id": "image701",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "image496",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "image510",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "image524",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "image552",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "image566",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "image538",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "image580",
+      "events": [
+        "click"
+      ]
+    }
+  ]
+}
