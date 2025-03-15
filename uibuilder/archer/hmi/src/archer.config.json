@@ -1,0 +1,724 @@
+{
+  "variables": [
+    {
+      "name": "dip1",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "dip2",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "total",
+      "type": "text",
+      "keyFrames": {}
+    },
+    {
+      "name": "wip",
+      "type": "text",
+      "keyFrames": {}
+    },
+    {
+      "name": "run",
+      "type": "text",
+      "keyFrames": {}
+    },
+    {
+      "name": "stop",
+      "type": "text",
+      "keyFrames": {}
+    },
+    {
+      "name": "dip3",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "dip4",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led0",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led1",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led2",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led3",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led4",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led5",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led6",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "led7",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw1",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw2",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw3",
+      "type": "boolean",
+      "keyFrames": {}
+    },
+    {
+      "name": "sw4",
+      "type": "boolean",
+      "keyFrames": {}
+    }
+  ],
+  "transformations": [
+    {
+      "name": "opacity_dip1-on",
+      "type": "opacity",
+      "element": "dip1-on",
+      "variable": "dip1",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 1,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "opacity_dip1-off",
+      "type": "opacity",
+      "element": "dip1-off",
+      "variable": "dip1",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 1,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "opacity_image254",
+      "type": "opacity",
+      "element": "image254",
+      "variable": "dip2",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 1,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "opacity_image253",
+      "type": "opacity",
+      "element": "image253",
+      "variable": "dip2",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": 1,
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "text_num1",
+      "type": "text",
+      "element": "num1",
+      "variable": "total",
+      "frames": {
+        "$default": {
+          "name": "$default",
+          "value": "12345",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0,
+      "bind": "value"
+    },
+    {
+      "name": "text_num2",
+      "type": "text",
+      "element": "num2",
+      "variable": "wip",
+      "frames": {
+        "$default": {
+          "name": "$default",
+          "value": "222",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0,
+      "bind": "value"
+    },
+    {
+      "name": "text_text12",
+      "type": "text",
+      "element": "text12",
+      "variable": "run",
+      "frames": {
+        "$default": {
+          "name": "$default",
+          "value": "1234",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0,
+      "bind": "value"
+    },
+    {
+      "name": "text_num4",
+      "type": "text",
+      "element": "num4",
+      "variable": "stop",
+      "frames": {
+        "$default": {
+          "name": "$default",
+          "value": "12345",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0,
+      "bind": "value"
+    },
+    {
+      "name": "opacity_image256",
+      "type": "opacity",
+      "element": "image256",
+      "variable": "dip3",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 1,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "opacity_image255",
+      "type": "opacity",
+      "element": "image255",
+      "variable": "dip3",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 1,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "opacity_image258",
+      "type": "opacity",
+      "element": "image258",
+      "variable": "dip4",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": 1,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "opacity_image257",
+      "type": "opacity",
+      "element": "image257",
+      "variable": "dip4",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": 0,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 1,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_led0",
+      "type": "fill-color",
+      "element": "led0",
+      "variable": "led0",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_led1",
+      "type": "fill-color",
+      "element": "led1",
+      "variable": "led1",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#ff2c00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_led2",
+      "type": "fill-color",
+      "element": "led2",
+      "variable": "led2",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff00",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_led3",
+      "type": "fill-color",
+      "element": "led3",
+      "variable": "led3",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": "#ff4e00",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_led4",
+      "type": "fill-color",
+      "element": "led4",
+      "variable": "led4",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": "#ff0000",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "fill-color_led5",
+      "type": "fill-color",
+      "element": "led5",
+      "variable": "led5",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#00ff0b",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "scale_led5",
+      "type": "scale",
+      "element": "led5",
+      "variable": "led5",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": {
+            "x": 1.1,
+            "y": 1.1
+          },
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": {
+            "x": 1,
+            "y": 1
+          },
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 110,
+      "center": "center"
+    },
+    {
+      "name": "scale_led4",
+      "type": "scale",
+      "element": "led4",
+      "variable": "led4",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": {
+            "x": 1,
+            "y": 1
+          },
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": {
+            "x": 1.1,
+            "y": 1.1
+          },
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 110,
+      "center": "center"
+    },
+    {
+      "name": "fill-color_led6",
+      "type": "fill-color",
+      "element": "led6",
+      "variable": "led6",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": "#ff00e9",
+          "transition": "step"
+        },
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "scale_led6",
+      "type": "scale",
+      "element": "led6",
+      "variable": "led6",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": {
+            "x": 1,
+            "y": 1
+          },
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": {
+            "x": 1.1,
+            "y": 1.1
+          },
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 110,
+      "center": "center"
+    },
+    {
+      "name": "fill-color_led7",
+      "type": "fill-color",
+      "element": "led7",
+      "variable": "led7",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": "#f9f9f9",
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": "#f46464",
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 0
+    },
+    {
+      "name": "scale_led7",
+      "type": "scale",
+      "element": "led7",
+      "variable": "led7",
+      "frames": {
+        "$true": {
+          "name": "$true",
+          "value": {
+            "x": 1.1,
+            "y": 1.1
+          },
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 110,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image13",
+      "type": "rotate",
+      "element": "image13",
+      "variable": "sw1",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": -75,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image1-4",
+      "type": "rotate",
+      "element": "image1-4",
+      "variable": "sw2",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": -75,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image9",
+      "type": "rotate",
+      "element": "image9",
+      "variable": "sw3",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": -75,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    },
+    {
+      "name": "rotate_image11",
+      "type": "rotate",
+      "element": "image11",
+      "variable": "sw4",
+      "frames": {
+        "$false": {
+          "name": "$false",
+          "value": -75,
+          "transition": "step"
+        },
+        "$true": {
+          "name": "$true",
+          "value": 0,
+          "transition": "step"
+        }
+      },
+      "transition": null,
+      "priority": 120,
+      "center": "center"
+    }
+  ],
+  "elements": [
+    {
+      "id": "dip3",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "sw4",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "dip4",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "dip1",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "sw3",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "dip2",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "sw1",
+      "events": [
+        "click"
+      ]
+    },
+    {
+      "id": "sw2",
+      "events": [
+        "click"
+      ]
+    }
+  ]
+}

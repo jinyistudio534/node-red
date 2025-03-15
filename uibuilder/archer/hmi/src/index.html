@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en"><head>
+    <style>
+        #container {    
+            position: absolute;    
+            width: 98%;
+            height: 94%;  
+            left:0px;
+            float:left;
+            margin:0px;
+            padding:0px;
+        }
+    
+        #error {
+            display: none;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../uibuilder/images/node-blue.ico">
+
+    <title>Modern IIFE client example - Node-RED uibuilder</title>
+    <meta name="description" content="Node-RED uibuilder - modern IIFE client example">
+
+    <!-- Your own CSS -->
+    <link type="text/css" rel="stylesheet" href="./index.css" media="all">
+
+    <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / - socket.io no longer needed  -->
+    <script defer src="../uibuilder/uibuilder.iife.min.js">/* THE UIBUILDER LIBRARY MUST BE IN THE HTML! DO NOT REMOVE */</script>
+    <script defer src="./index.js">/* OPTIONAL: Put your custom code in that */</script>
+    <script src='libs/jquery-3.5.1.js'></script>
+    <script src='libs/archer.min.js'></script>
+    <!-- #endregion -->
+    
+
+</head><body>   
+   
+
+    <div id="container"></div>
+    
+    <div id="error">
+        <h1>The graphic files could not be loaded</h1>
+        <p>Please note that this example may only work when served through a web server. The example code needs to
+            dynamically load files which for security reasons is not allowed when serving from the file system.</p>
+    </div>
+
+    <script type="text/javascript"> 
+        var ndip=0;
+        var nsw=0;
+        /**
+        * Root location where your interactive graphic is stored.
+        * Leave empty to resolve paths relative from this HTML.
+        * Can also contain an absolute URL to the server where your graphic is stored, for example:
+        * http://my-domain.com/graphics/my-graphic/
+        */
+        var rootUrl = '';
+        
+        /**
+        * Location of the assets folder, by default resolved relative from root URL
+        */
+        var assetUrl = rootUrl + 'assets';
+        
+        /**
+        * Location of the SVG file, by default resolved relative from root URL
+        */
+        var graphicUrl = rootUrl + 'archer.graphic.svg';
+        
+        /**
+        * Location of the graphic configuration file, by default resolved relative from root URL
+        */
+        var configUrl = rootUrl + 'archer.config.json';
+        
+        /**
+        * The container HTML element in which to display the graphic
+        */
+        var container = document.getElementById('container');
+        
+        // Create a graphic instance over the container
+        var graphic = archer.create(container);
+        
+        // Tell the graphic where assets (e.g. images) are located
+        graphic.document.setAssetRoot(assetUrl);
+        
+        // Load graphic and configuration
+        graphic.loadUrl(graphicUrl, configUrl);
+        
+        // Wait until files are loaded
+        graphic.on('ready', function () {
+        
+            // Make graphic fit into container bounds
+            graphic.view.zoomToFit();
+        
+            // Enable zoom / pan with mouse
+            graphic.view.enableMouse(false, false);
+        
+            // Set variable values
+            
+            graphic.setValue('total', '0');
+            graphic.setValue('wip', '0');
+            graphic.setValue('run', '0');
+            graphic.setValue('stop', '0');
+            
+            graphic.setValue('led0', false);
+            graphic.setValue('led1', false);
+            graphic.setValue('led2', false);
+            graphic.setValue('led3', false);
+            graphic.setValue('led4', false);
+            graphic.setValue('led5', false);
+            graphic.setValue('led6', false);
+            graphic.setValue('led7', false);
+
+            graphic.setValue('dip1', false);
+            graphic.setValue('dip2', false);
+            graphic.setValue('dip3', false);
+            graphic.setValue('dip4', false);
+            
+            graphic.setValue('sw1', false);
+            graphic.setValue('sw2', false);
+            graphic.setValue('sw3', false);
+            graphic.setValue('sw4', false);
+        
+            // Add event listeners
+            // stop button
+            graphic.element('dip1').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('dip1');
+                graphic.setValue('dip1', b1);
+                graphic.setValue('led0', b1);
+                // uibuilder.send({topic:'dip',payload:{'dip1':b1}});
+                ndip = b1 ? ndip|(1):ndip & ~(1) ; 
+                uibuilder.send({topic:'dip',payload:ndip});
+            });
+
+            graphic.element('dip2').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('dip2');
+                graphic.setValue('dip2', b1);
+                graphic.setValue('led1', b1);
+                ndip = b1 ? ndip|(1<<1):ndip & ~(1<<1) ; 
+                uibuilder.send({topic:'dip',payload:ndip});
+            });
+
+            graphic.element('dip3').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('dip3');
+                graphic.setValue('dip3', b1);
+                graphic.setValue('led2', b1);
+                ndip = b1 ? ndip|(1<<2):ndip & ~(1<<2) ; 
+                uibuilder.send({topic:'dip',payload:ndip});
+            });
+            // start button
+            graphic.element('dip4').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('dip4');
+                graphic.setValue('dip4', b1);
+                graphic.setValue('led3', b1);
+                ndip = b1 ? ndip|(1<<3):ndip & ~(1<<3) ; 
+                uibuilder.send({topic:'dip',payload:ndip});
+            });
+            graphic.element('sw1').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('sw1');
+                graphic.setValue('sw1', b1);
+                graphic.setValue('led4', b1);
+                nsw = b1 ? nsw|(1):nsw & ~(1) ; 
+                uibuilder.send({topic:'sw',payload:nsw});
+            });
+            graphic.element('sw2').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('sw2');
+                graphic.setValue('sw2', b1);
+                graphic.setValue('led5', b1);
+                nsw = b1 ? nsw|(1<<1):nsw & ~(1<<1) ; 
+                uibuilder.send({topic:'sw',payload:nsw});
+            });
+            graphic.element('sw3').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('sw3');
+                graphic.setValue('sw3', b1);
+                graphic.setValue('led6', b1);
+                nsw = b1 ? nsw|(1<<2):nsw & ~(1<<2) ; 
+                uibuilder.send({topic:'sw',payload:nsw});
+            });
+            graphic.element('sw4').on('click', function(element, event) {
+                console.log('event: ' + event.type + ', element: ' + element.id);
+                b1 = !graphic.getValue('sw4');
+                graphic.setValue('sw4', b1);
+                graphic.setValue('led7', b1);
+                nsw = b1 ? nsw|(1<<3):nsw & ~(1<<3) ; 
+                uibuilder.send({topic:'sw',payload:nsw});
+            });            
+           
+            
+            setInterval(function() {
+                
+            }, 150);
+
+            // b4j_connect("/ws/boards/fan1");
+            uibuilder.onTopic('hmi', (msg) => {
+                console.log('>> onTopic `hmi` >>', this, msg.hmi)
+                for (const [ key, value ] of Object.entries(msg.hmi)) {
+                    // do something with `key` and `value`
+                    graphic.setValue(key,value);
+                }               
+                // ... do something useful with the msg here ...
+            })
+        });
+        
+        // Files could not be loaded, maybe due to security restrictions
+        // Display error message
+        graphic.on('error', function() {
+            document.getElementById('error').style['display'] = 'block';
+        })        
+       
+    </script>
+    
+</body></html>
