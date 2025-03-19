@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType('compare-value', {
+        category: 'function',        // 分類為功能節點
+        color: '#a6bbcf',           // 節點顏色，與 lower-case 一致
+        defaults: {
+            name: { value: "" },     // 節點名稱
+            field: { value: "payload", required: true } // 要比較的欄位，預設為 payload
+        },
+        inputs: 1,                  // 一個輸入
+        outputs: 1,                 // 一個輸出
+        icon: "file.png",           // 節點圖示（可自行替換）
+        label: function() {
+            return this.name || "compare-value"; // 顯示名稱或預設值
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="compare-value">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-field"><i class="fa fa-key"></i> Field to compare</label>
+        <input type="text" id="node-input-field" placeholder="e.g., payload">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="compare-value">
+    <p>A node that compares a specified field in the input message with its previous value.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>Field to compare
+            <span class="property-type">string</span>
+        </dt>
+        <dd>The field in the message to compare (e.g., <code>payload</code>, <code>topic</code>).</dd>
+    </dl>
+    <h3>Outputs</h3>
+    <p>Outputs the entire message if the specified field's value differs from the previous input; otherwise, no output.</p>
+</script>
