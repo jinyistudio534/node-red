@@ -1,0 +1,104 @@
+<!-- HTML 部分 -->
+<script type="text/javascript">
+    RED.nodes.registerType('compare-func', {
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            field: { value: "payload", required: true },
+            code: { value: "return msg;" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "file.png",
+        label: function() {
+            return this.name || "compare-func";
+        },
+        oneditprepare: function() {
+            // 初始化程式碼編輯器，直接在選項中設置
+            this.codeEditor = RED.editor.createEditor({
+                id: 'node-input-editor',
+                mode: 'ace/mode/javascript',
+                value: this.code || "return msg;",
+                showLineNumbers: true,  // 直接設置行號
+                showGutter: true,       // 直接設置側邊欄
+                globals: {
+                    msg: true,
+                    context: true,
+                    RED: true,
+                    util: true,
+                    flow: true,
+                    global: true,
+                    console: true,
+                    Buffer: true,
+                    setTimeout: true,
+                    clearTimeout: true,
+                    setInterval: true,
+                    clearInterval: true
+                }
+            });
+            // 同步隱藏輸入欄位            
+            $("#node-input-code").val(this.code || "return msg;");
+        },
+        oneditsave: function() {
+            var editor = this.codeEditor;
+            var newValue = editor.getValue();
+            this.code = newValue;
+            $("#node-input-code").val(newValue);
+            editor.destroy();
+            delete this.codeEditor;
+            console.log("Saved code:", this.code);
+        },
+        oneditcancel: function() {
+            if (this.codeEditor) {
+                this.codeEditor.destroy();
+                delete this.codeEditor;
+            }
+        },
+        oneditresize: function(size) {
+            var height = size.height;
+            $("#node-input-editor").css("height", (height - 83) + "px");
+            if (this.codeEditor) {
+                this.codeEditor.resize();
+            }
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="compare-func">
+    <input type="hidden" id="node-input-code">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-field"><i class="fa fa-key"></i> Field to compare</label>
+        <input type="text" id="node-input-field" placeholder="e.g., payload">
+    </div>
+    <div class="form-row">
+        <label style="width: auto;"><i class="fa fa-code"></i> On Value Change</label>
+    </div>
+    <div class="form-row node-text-editor-row">
+        <div style="height: 220px; min-height:150px;" class="node-text-editor" id="node-input-editor"></div>        
+    </div>
+</script>
+
+<script type="text/html" data-help-name="compare-func">
+    <p>A node that compares a specified field in the input message with its previous value and executes custom code when changed.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>Field to compare
+            <span class="property-type">string</span>
+        </dt>
+        <dd>The field in the message to compare (e.g., <code>payload</code>, <code>topic</code>).</dd>
+    </dl>
+    <h3>Custom Code</h3>
+    <p>Enter JavaScript code to process the message when the value changes. The code has access to:</p>
+    <ul>
+        <li><code>msg</code> - the input message object</li>
+        <li><code>RED</code> - the Node-RED runtime API</li>
+    </ul>
+    <p>Return value will be sent as output. Return nothing to send nothing.</p>
+    <h3>Outputs</h3>
+    <p>Outputs the result of the custom code when the specified field's value differs from the previous input; otherwise, no output.</p>
+</script>
