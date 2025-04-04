@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="../uibuilder/images/node-blue.ico">
+
+    <title>marquee</title>
+    <meta name="description" content="Node-RED uibuilder - Blank template">
+    <link rel="stylesheet" href="ai_marquees.css">
+    <!-- Your own CSS (defaults to loading uibuilders css)-->
+    <link type="text/css" rel="stylesheet" href="./index.css" media="all">
+
+    <!-- #region Supporting Scripts. These MUST be in the right order. Note no leading / -->
+    <script defer src="../uibuilder/uibuilder.iife.min.js">/* THE UIBUILDER LIBRARY MUST BE IN THE HTML! DO NOT REMOVE */</script>
+    <!-- <script defer src="./index.js">/* OPTIONAL: Put your custom code in that */</script> -->
+    <!-- #endregion -->
+
+</head><body class="uib">
+    
+    <div id="msgDiv"></div>
+    <script src="ai_marquees.js"></script>
+    <script>        
+
+        window.onload = function() {
+            const marquee = new MarqueeManager('msgDiv', { 
+                moveSpeed: 1,
+                fontSize: 100, // 字型設為 80px
+                lineHeight: 1.2
+            });
+
+            //const id1 = marquee.addMessage({ id: 'msg1', text: '第一則訊息'});
+            //const id2 = marquee.addMessage({ id: 'msg2', text: '第二則訊息比較長'});
+            //const id3 = marquee.addMessage({ id: 'msg3', text: '第三則訊息也很長'});
+            //const id4 = marquee.addMessage({ id: 'msg4', text: '第四則訊息'});
+            //const id5 = marquee.addMessage({ id: 'msg5', text: '第五則訊息' });
+            //const id6 = marquee.addMessage({ id: 'msg6', text: '第六則訊息', seconds: 7 });
+            //const id7 = marquee.addMessage({ id: 'msg7', text: '第七則訊息', seconds: 7 });
+            //const id8 = marquee.addMessage({ id: 'msg8', text: '第八則訊息', seconds: 7 });
+            //const id9 = marquee.addMessage({ id: 'msg9', text: '第九則訊息', seconds: 7 });
+            //const id10 = marquee.addMessage({ id: 'msg10', text: '第十則訊息', seconds: 7 });
+            //const id11 = marquee.addMessage({ id: 'msg11', text: '第十一則訊息', seconds: 7 });
+
+            uibuilder.onTopic('upload', (msg) => {
+                //console.log('>> onTopic `upload` >>', msg.payload)                
+                // ... do something useful with the msg here ...
+                if(marquee.hasMessage(msg.payload.id)) {
+                    console.log('updateMessage > ', msg.payload);
+                    marquee.updateMessage(msg.payload.id,{text: msg.payload.msg,color:msg.payload.color});
+                }
+                else {
+                    console.log('addMessage > ', msg.payload);
+                    marquee.addMessage({ id: msg.payload.id, text: msg.payload.msg,color:msg.payload.color});
+                }
+            })
+            uibuilder.onTopic('delete', (msg) => {
+                console.log('>> onTopic `delete` >>', msg.payload.id)                
+                // ... do something useful with the msg here ...
+                if(marquee.hasMessage(msg.payload.id)) {
+                    const n1=marquee.removeMessage(msg.payload.id)
+                    console.log('removeMessage > ',n1);                   
+                }
+                else {
+                    console.log('not found > ', msg.payload.id);                    
+                }
+            })
+        }
+        // setTimeout(() => marquee.updateMessage('msg1', { text: '第一則訊息已修改', seconds: 4 }), 10000);
+    </script>    
+
+</body></html>

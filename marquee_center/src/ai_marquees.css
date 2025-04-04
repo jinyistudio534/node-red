@@ -1,0 +1,34 @@
+#msgDiv {
+    width: 100%;
+    height: 100vh; /* 與畫面同高 */
+    overflow: hidden;
+    position: absolute; /* 改為 absolute 實現 overlay */
+    top: 0; /* 置於畫面頂部 */
+    left: 0; /* 置於畫面左側 */
+    white-space: nowrap;
+    background: transparent; /* 保持透明 */
+    z-index: 10; /* 確保在其他內容上方 */
+}
+
+.marquee {
+    position: absolute;
+    display: block;
+    width: 100%;
+    margin-left: 8px;
+    text-align: left;
+}
+
+@keyframes moveToPosition {
+    0% { top: var(--start-y); }
+    100% { top: var(--target-y); }
+}
+
+/* 新增的背景內容樣式 */
+#content {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: linear-gradient(to bottom, #f0f0f0, #d0d0d0); /* 示例漸變背景 */
+    padding: 20px;
+    box-sizing: border-box;
+}
