@@ -1,0 +1,1469 @@
+[
+    {
+        "id": "c12c6896a3e5a055",
+        "type": "tab",
+        "label": "跑馬燈",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e1e23ff3fe8840c5",
+        "type": "group",
+        "z": "c12c6896a3e5a055",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "f7ca92f1a3e1022b",
+            "20c5c2c3d508e2f5",
+            "d2e3d1a1f39c850a",
+            "d7bc10d04e0fda5a",
+            "89699cc7034f3dde",
+            "73485407043617e9",
+            "77d19459b91d2d5a"
+        ],
+        "x": 144,
+        "y": 659,
+        "w": 662,
+        "h": 282
+    },
+    {
+        "id": "af9d84956d3ddeab",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "Add Headers",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "[{\"title\":\"ID\",\"value\":\"id\",\"sortable\":false},{\"title\":\"訊息內容\",\"value\":\"msg\",\"sortable\":false},{\"title\":\"標示顏色\",\"value\":\"color\",\"sortable\":false},{\"title\":\"Actions\",\"value\":\"edit\"}]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 460,
+        "wires": [
+            [
+                "048ce69d359921c0"
+            ]
+        ]
+    },
+    {
+        "id": "048ce69d359921c0",
+        "type": "ui-template",
+        "z": "c12c6896a3e5a055",
+        "group": "50745a3fddb8a49e",
+        "page": "",
+        "ui": "",
+        "name": "訊息表",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "head": "",
+        "format": "<template>\n    <!-- Provide an input text box to search the content -->\n      <v-container fluid>\n          <v-row align=\"center\" justify=\"center\" >\n            <v-col  class=\"y-0\">\n              <v-text-field v-model=\"search\" label=\"Search\" prepend-inner-icon=\"mdi-magnify\" single-line variant=\"outlined\"\n                hide-details ></v-text-field>\n            </v-col>\n            <v-col cols=\"1\">\n              <v-btn prepend-icon=\"mdi-delete-outline\" variant=\"tonal\" @click=\"send({topic: 'new', payload: null})\">\n                新增\n              </v-btn>\n            </v-col>\n          </v-row>\n      </v-container>\n    <v-data-table v-model:search=\"search\" :items=\"msg?.payload\" :headers=\"msg?.headers\">      \n\n      <!-- 自定義顏色欄位的顯示方式 -->\n      <template v-slot:item.color=\"{ item }\">\n        <div class=\"color-box\" :style=\"{ backgroundColor: item.color }\"></div>\n      </template>\n\n      <template v-slot:item.edit=\"{ item }\">\n        <v-container fluid>\n          <v-row >\n            <v-col cols=\"auto\">\n              <v-btn prepend-icon=\"mdi-file-edit-outline\" variant=\"text\" @click=\"send({topic: 'edit', payload: item})\">               \n              </v-btn>\n            </v-col>\n            <v-col cols=\"auto\">\n              <v-btn prepend-icon=\"mdi-delete-outline\" variant=\"text\" @click=\"send({topic: 'delete', payload: item})\">        \n              </v-btn>\n            </v-col>\n            <v-col cols=\"auto\">\n              <v-btn prepend-icon=\"mdi-play-box-outline\" variant=\"text\" @click=\"send({topic: 'upload', payload: item})\">\n              </v-btn>\n            </v-col>\n          </v-row>\n        </v-container>\n\n      </template>\n\n\n    </v-data-table>\n</template>\n\n<script>  \n  export default {\n    data () {\n      return {\n        search: ''\n      }\n    },\n    methods: {\n        // add a function to determine the color of the progress bar given the row's item\n\n\n\n    }\n  }\n</script>\n\n<style scoped>\n  .color-box {\n    width: 32px;\n    height: 20px;\n    border: 1px solid #ccc;\n    /* 可選：添加邊框讓顏色更明顯 */\n    display: inline-block;\n  }\n</style>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 890,
+        "y": 460,
+        "wires": [
+            [
+                "3293fa30c5828070",
+                "ede002a80124e1de"
+            ]
+        ]
+    },
+    {
+        "id": "5ee76184e6e7d57b",
+        "type": "link in",
+        "z": "c12c6896a3e5a055",
+        "name": "User Changes",
+        "links": [
+            "b0de223a78e76d30",
+            "c51fb738abba434f"
+        ],
+        "x": 225,
+        "y": 400,
+        "wires": [
+            [
+                "5cf8784c631fbf1a"
+            ]
+        ]
+    },
+    {
+        "id": "87583a5e57bbc79b",
+        "type": "function",
+        "z": "c12c6896a3e5a055",
+        "name": "Prep Data",
+        "func": "let useraccess = flow.get(\"useraccess\");\nif ((Array.isArray(useraccess.msgs) ? 1 : 0) + (Array.isArray(useraccess.sessions) ? 1 : 0) !== 2) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Invalid useraccess config\" });\n    return [null, null];\n}\n\nmsg.payload = JSON.parse(JSON.stringify(useraccess.msgs));\n\nfor (let i = 0; i<msg.payload.length; i++) {\n    // add index to the data\n    msg.payload[i].$index = i;   \n    msg.payload[i].edit = msg.payload[i].id;\n    \n    // delete msg.payload[i].pages;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 460,
+        "wires": [
+            [
+                "af9d84956d3ddeab",
+                "e8ea93608f3e6676"
+            ]
+        ]
+    },
+    {
+        "id": "e8ea93608f3e6676",
+        "type": "debug",
+        "z": "c12c6896a3e5a055",
+        "name": "Formatted data",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "921c9dfc0406c745",
+        "type": "inject",
+        "z": "c12c6896a3e5a055",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 520,
+        "wires": [
+            [
+                "87583a5e57bbc79b"
+            ]
+        ]
+    },
+    {
+        "id": "3293fa30c5828070",
+        "type": "debug",
+        "z": "c12c6896a3e5a055",
+        "name": "Msg selection",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ede002a80124e1de",
+        "type": "switch",
+        "z": "c12c6896a3e5a055",
+        "name": "Topic?",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "edit",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "delete",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "new",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "upload",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 1030,
+        "y": 460,
+        "wires": [
+            [
+                "5617dcf752f042d0",
+                "733c6d8140c3dc0f",
+                "ddfc74bb4282791a",
+                "5e803c73a6cc05ed",
+                "f97c2a8ddb7a3cc9"
+            ],
+            [
+                "13135f8955c8b4dd"
+            ],
+            [
+                "d81d0de39ccff7e9"
+            ],
+            [
+                "d420d3cea7e33da4"
+            ]
+        ]
+    },
+    {
+        "id": "2935010c9908737a",
+        "type": "ui-control",
+        "z": "c12c6896a3e5a055",
+        "name": "To Edit",
+        "ui": "cb79bc4520925e32",
+        "events": "all",
+        "x": 1510,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5617dcf752f042d0",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.id",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "id",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1330,
+        "y": 600,
+        "wires": [
+            [
+                "7aca66befb93d32d"
+            ]
+        ]
+    },
+    {
+        "id": "4174b97a6cc4a7f8",
+        "type": "inject",
+        "z": "c12c6896a3e5a055",
+        "name": "Test Data",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{\"id\":\"1234ABC\",\"msg\":\"Test User\",\"edit\":\"1234ABC\",\"pagestxt\":\"User Access\"},{\"id\":\"FHEMMEC\",\"msg\":\"Second User\",\"edit\":\"FHEMMEC\",\"pagestxt\":\"User Access\"}]",
+        "payloadType": "json",
+        "x": 520,
+        "y": 520,
+        "wires": [
+            [
+                "af9d84956d3ddeab"
+            ]
+        ]
+    },
+    {
+        "id": "56d54cfef030d523",
+        "type": "ui-event",
+        "z": "c12c6896a3e5a055",
+        "ui": "cb79bc4520925e32",
+        "name": "",
+        "x": 125,
+        "y": 460,
+        "wires": [
+            [
+                "ace762c81a0ff496"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "ace762c81a0ff496",
+        "type": "function",
+        "z": "c12c6896a3e5a055",
+        "name": "Detect page load",
+        "func": "let pagetitle = \"訊息管理\";\n\nif ((msg.topic === \"$pageview\") && (msg.payload.page.name === pagetitle)) {\n    return msg;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 460,
+        "wires": [
+            [
+                "87583a5e57bbc79b"
+            ]
+        ]
+    },
+    {
+        "id": "7aca66befb93d32d",
+        "type": "ui-text-input",
+        "z": "c12c6896a3e5a055",
+        "group": "8c3173ee8b65ede4",
+        "name": "",
+        "label": "訊息ID",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "topic": "topic",
+        "topicType": "msg",
+        "mode": "text",
+        "tooltip": "",
+        "delay": 300,
+        "passthru": true,
+        "sendOnDelay": true,
+        "sendOnBlur": true,
+        "sendOnEnter": true,
+        "className": "",
+        "clearable": false,
+        "sendOnClear": false,
+        "icon": "",
+        "iconPosition": "left",
+        "iconInnerPosition": "inside",
+        "x": 1510,
+        "y": 600,
+        "wires": [
+            [
+                "91e5acd73ddfe7b2"
+            ]
+        ]
+    },
+    {
+        "id": "91e5acd73ddfe7b2",
+        "type": "function",
+        "z": "c12c6896a3e5a055",
+        "name": "Handle changes",
+        "func": "let useraccess = flow.get(\"useraccess\");\nif ((Array.isArray(useraccess.msgs) ? 1 : 0) + (Array.isArray(useraccess.sessions) ? 1 : 0) !== 2) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Invalid useraccess config\" });\n    return [null, null];\n}\n\n// Context variable to store all the changes\nlet save = context.get(\"save\") ?? {};\n\n// Reset signal to delete all the data - may not be required\nif (msg.topic === \"$reset\") {\n    save = {};\n    context.set(\"save\", save);\n    return;\n}\n\n// Update request received\nif (msg.topic === \"$save\") {\n    node.status({ fill: \"green\", shape: \"ring\", text: \"Entry \" + save.$index + \" updated\" });\n    useraccess.msgs[save.$index] = JSON.parse(JSON.stringify(save));\n    delete useraccess.msgs[save.$index].$index;\n    flow.set(\"useraccess\", useraccess);\n    return [{topic : \"Save\", payload : \"User details updated\"}];\n}\n\nnode.status({ fill: \"yellow\", shape: \"ring\", text: \"Current index: \" + save.$index});\n\n// Store anything else\nsave[msg.topic] = msg.payload;\ncontext.set(\"save\", save);\nreturn;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1720,
+        "y": 600,
+        "wires": [
+            [
+                "00d69659217a85f5",
+                "5104cc1ac2df013b"
+            ]
+        ]
+    },
+    {
+        "id": "bad62835336154bb",
+        "type": "ui-button",
+        "z": "c12c6896a3e5a055",
+        "group": "8c3173ee8b65ede4",
+        "name": "",
+        "label": "訊息管理",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "emulateClick": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "arrow-left",
+        "iconPosition": "left",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "$back",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 1360,
+        "y": 860,
+        "wires": [
+            [
+                "e31b996c5216b0d3"
+            ]
+        ]
+    },
+    {
+        "id": "285fe6b5b05419cd",
+        "type": "ui-button",
+        "z": "c12c6896a3e5a055",
+        "group": "8c3173ee8b65ede4",
+        "name": "",
+        "label": "存檔",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "emulateClick": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "content-save",
+        "iconPosition": "left",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "$save",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 1510,
+        "y": 720,
+        "wires": [
+            [
+                "91e5acd73ddfe7b2"
+            ]
+        ]
+    },
+    {
+        "id": "4d666e108f752a8a",
+        "type": "ui-control",
+        "z": "c12c6896a3e5a055",
+        "name": "To Message panel",
+        "ui": "cb79bc4520925e32",
+        "events": "all",
+        "x": 1695,
+        "y": 860,
+        "wires": [
+            []
+        ],
+        "l": false
+    },
+    {
+        "id": "e31b996c5216b0d3",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "To Msg panel",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"page\":\"訊息管理\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1550,
+        "y": 860,
+        "wires": [
+            [
+                "4d666e108f752a8a",
+                "b0de223a78e76d30"
+            ]
+        ]
+    },
+    {
+        "id": "733c6d8140c3dc0f",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "To details",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"page\": \"Message Details\" }",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1340,
+        "y": 420,
+        "wires": [
+            [
+                "2935010c9908737a"
+            ]
+        ]
+    },
+    {
+        "id": "00d69659217a85f5",
+        "type": "ui-notification",
+        "z": "c12c6896a3e5a055",
+        "ui": "cb79bc4520925e32",
+        "position": "top right",
+        "colorDefault": true,
+        "color": "#000000",
+        "displayTime": "5",
+        "showCountdown": true,
+        "outputs": 1,
+        "allowDismiss": true,
+        "dismissText": "Close",
+        "raw": false,
+        "className": "",
+        "name": "Notification",
+        "x": 1930,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddfc74bb4282791a",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "Index",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.$index",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "$index",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1510,
+        "y": 480,
+        "wires": [
+            [
+                "91e5acd73ddfe7b2"
+            ]
+        ]
+    },
+    {
+        "id": "b0de223a78e76d30",
+        "type": "link out",
+        "z": "c12c6896a3e5a055",
+        "name": "link out 75",
+        "mode": "link",
+        "links": [
+            "5ee76184e6e7d57b"
+        ],
+        "x": 1695,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "2ff23d6f9a1190f3",
+        "type": "comment",
+        "z": "c12c6896a3e5a055",
+        "name": "User Administration",
+        "info": "",
+        "x": 210,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "117b4cc5f302f389",
+        "type": "function",
+        "z": "c12c6896a3e5a055",
+        "name": "Delete user",
+        "func": "let useraccess = flow.get(\"useraccess\");\nif ((Array.isArray(useraccess.msgs) ? 1 : 0) + (Array.isArray(useraccess.sessions) ? 1 : 0) !== 2) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Invalid useraccess config\" });\n    return [null, null];\n}\n\nif (msg.payload === \"confirm_clicked\") {\n\n    let index = msg.selected.$index;\n\n    node.status({fill:\"green\",shape:\"ring\",text:\"Msg \" + index + \" deleted\"});\n\n    useraccess.msgs.splice(index,1);\n\n    flow.set(\"useraccess\", useraccess);\n\n    return msg;\n\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1710,
+        "y": 960,
+        "wires": [
+            [
+                "c51fb738abba434f"
+            ]
+        ]
+    },
+    {
+        "id": "c51fb738abba434f",
+        "type": "link out",
+        "z": "c12c6896a3e5a055",
+        "name": "link out 77",
+        "mode": "link",
+        "links": [
+            "5ee76184e6e7d57b"
+        ],
+        "x": 1865,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "d81d0de39ccff7e9",
+        "type": "function",
+        "z": "c12c6896a3e5a055",
+        "name": "New msg",
+        "func": "let useraccess = flow.get(\"useraccess\");\nif ((Array.isArray(useraccess.msgs) ? 1 : 0) + (Array.isArray(useraccess.sessions) ? 1 : 0) !== 2) {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"Invalid useraccess config\" });\n    return [null, null];\n}\n\n// New template user\nlet newmsg = {\n    \"id\": \"NEW\",\n    \"msg\": \"請輸入你要顯示的訊息\",\n    \"color\":\"#880000\",\n    \"edit\":0\n};\n\n// Add to the array\nuseraccess.msgs.push(JSON.parse(JSON.stringify(newmsg)));\n// Store in the context\nflow.set(\"useraccess\", useraccess);\n\n// Add the index to the structure as well\nnewmsg.$index = useraccess.msgs.length-1;\n\nnode.status({ fill: \"green\", shape: \"ring\", text: \"User \" + newmsg.$index + \" created\" });\n\n// return in the payload for the new screen\nmsg.payload = newmsg;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 580,
+        "wires": [
+            [
+                "733c6d8140c3dc0f",
+                "ddfc74bb4282791a",
+                "5617dcf752f042d0",
+                "5e803c73a6cc05ed",
+                "f97c2a8ddb7a3cc9"
+            ]
+        ]
+    },
+    {
+        "id": "5cf8784c631fbf1a",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "Topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "87583a5e57bbc79b"
+            ]
+        ]
+    },
+    {
+        "id": "dbadc2d99bc5d652",
+        "type": "ui-notification",
+        "z": "c12c6896a3e5a055",
+        "ui": "cb79bc4520925e32",
+        "position": "center center",
+        "colorDefault": true,
+        "color": "#000000",
+        "displayTime": "0",
+        "showCountdown": false,
+        "outputs": 1,
+        "allowDismiss": true,
+        "dismissText": "No",
+        "allowConfirm": true,
+        "confirmText": "Yes",
+        "raw": false,
+        "className": "",
+        "name": "Dialog",
+        "x": 1510,
+        "y": 960,
+        "wires": [
+            [
+                "117b4cc5f302f389"
+            ]
+        ]
+    },
+    {
+        "id": "13135f8955c8b4dd",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "Confirmation",
+        "rules": [
+            {
+                "t": "set",
+                "p": "selected",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Are you sure you want to delete the user?",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1350,
+        "y": 960,
+        "wires": [
+            [
+                "dbadc2d99bc5d652"
+            ]
+        ]
+    },
+    {
+        "id": "71ac1905202880ea",
+        "type": "ui-text-input",
+        "z": "c12c6896a3e5a055",
+        "group": "8c3173ee8b65ede4",
+        "name": "",
+        "label": "訊息內容",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "topic": "topic",
+        "topicType": "msg",
+        "mode": "text",
+        "tooltip": "",
+        "delay": 300,
+        "passthru": true,
+        "sendOnDelay": true,
+        "sendOnBlur": true,
+        "sendOnEnter": true,
+        "className": "",
+        "clearable": false,
+        "sendOnClear": false,
+        "icon": "",
+        "iconPosition": "left",
+        "iconInnerPosition": "inside",
+        "x": 1500,
+        "y": 540,
+        "wires": [
+            [
+                "91e5acd73ddfe7b2"
+            ]
+        ]
+    },
+    {
+        "id": "5e803c73a6cc05ed",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "msg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.msg",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "msg",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1330,
+        "y": 540,
+        "wires": [
+            [
+                "71ac1905202880ea"
+            ]
+        ]
+    },
+    {
+        "id": "637e1eff57a0c276",
+        "type": "config",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "properties": [
+            {
+                "p": "useraccess",
+                "pt": "flow",
+                "to": "{\"msgs\":[{\"id\":\"msg01\",\"msg\":\"hello...\",\"color\":\"#000000\",\"edit\":0},{\"id\":\"msg02\",\"msg\":\"hello...123\",\"color\":\"#000000\",\"edit\":0}],\"sessions\":[]}",
+                "tot": "json"
+            }
+        ],
+        "active": true,
+        "x": 370,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b51f1a1d73cea5a2",
+        "type": "file",
+        "z": "c12c6896a3e5a055",
+        "name": "存檔",
+        "filename": "useraccess.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 2350,
+        "y": 440,
+        "wires": [
+            [
+                "5c3bde12d757dc15"
+            ]
+        ]
+    },
+    {
+        "id": "5104cc1ac2df013b",
+        "type": "switch",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Save",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1910,
+        "y": 520,
+        "wires": [
+            [
+                "cd746250762f3fde",
+                "8e50178c0e23f11b"
+            ]
+        ],
+        "outputLabels": [
+            "Save"
+        ]
+    },
+    {
+        "id": "cd746250762f3fde",
+        "type": "function",
+        "z": "c12c6896a3e5a055",
+        "name": "useraccess",
+        "func": "var msg={\"payload\":flow.get(\"useraccess\")};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2090,
+        "y": 440,
+        "wires": [
+            [
+                "e52b7d17d77bfec4"
+            ]
+        ]
+    },
+    {
+        "id": "e52b7d17d77bfec4",
+        "type": "json",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 2230,
+        "y": 440,
+        "wires": [
+            [
+                "b51f1a1d73cea5a2"
+            ]
+        ]
+    },
+    {
+        "id": "5c3bde12d757dc15",
+        "type": "debug",
+        "z": "c12c6896a3e5a055",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2480,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "959953f3e34555ab",
+        "type": "file in",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "filename": "useraccess.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "0967efe516dc1853"
+            ]
+        ]
+    },
+    {
+        "id": "0967efe516dc1853",
+        "type": "json",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 530,
+        "y": 320,
+        "wires": [
+            [
+                "448d7ac74dd941d6",
+                "c249ec9f7f5510b4"
+            ]
+        ]
+    },
+    {
+        "id": "614616d3b29aa267",
+        "type": "inject",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "topic": "test",
+        "x": 190,
+        "y": 320,
+        "wires": [
+            [
+                "959953f3e34555ab"
+            ]
+        ]
+    },
+    {
+        "id": "c249ec9f7f5510b4",
+        "type": "debug",
+        "z": "c12c6896a3e5a055",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "448d7ac74dd941d6",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "useraccess",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e50178c0e23f11b",
+        "type": "debug",
+        "z": "c12c6896a3e5a055",
+        "name": "debug 11",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2080,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "f84d993888d5599e",
+        "type": "ui-text-input",
+        "z": "c12c6896a3e5a055",
+        "group": "8c3173ee8b65ede4",
+        "name": "",
+        "label": "顯示顏色",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "topic": "topic",
+        "topicType": "msg",
+        "mode": "color",
+        "tooltip": "",
+        "delay": 300,
+        "passthru": true,
+        "sendOnDelay": true,
+        "sendOnBlur": true,
+        "sendOnEnter": true,
+        "className": "",
+        "clearable": false,
+        "sendOnClear": false,
+        "icon": "",
+        "iconPosition": "left",
+        "iconInnerPosition": "inside",
+        "x": 1500,
+        "y": 660,
+        "wires": [
+            [
+                "91e5acd73ddfe7b2"
+            ]
+        ]
+    },
+    {
+        "id": "f97c2a8ddb7a3cc9",
+        "type": "change",
+        "z": "c12c6896a3e5a055",
+        "name": "COLOR",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.color",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "color",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1340,
+        "y": 660,
+        "wires": [
+            [
+                "f84d993888d5599e"
+            ]
+        ]
+    },
+    {
+        "id": "f7ca92f1a3e1022b",
+        "type": "ui-template",
+        "z": "c12c6896a3e5a055",
+        "g": "e1e23ff3fe8840c5",
+        "group": "",
+        "page": "",
+        "ui": "cb79bc4520925e32",
+        "name": "dialog",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<!-- \n  This pops up an OK/Cancel dialog when sent a payload of the form\n  {\n    title: \"dialog title\",\n    content: \"The text to display in the window\",\n    okText: \"OK\",         // optional, if not present defaults to OK\n    cancelText: \"Cancel\"   // optional, defaults to Cancel\n  }\n  All properties may contain embedded html tags such as <br/>\n  If msg._client is present and contains a socketId (as will be the case if the template is triggered\n  from another widget such as a button) then the popup will only appear on the matching session.\n  For example, if a button widget is fed into the template then the popup will appear only on the browser where the button\n  was clicked.\n  If msg._client is not present then the popup will appear on all connected browsers and will have to be acknowleged on each one.\n\n  When one of the buttons is clicked a message is sent with msg.payload containing the ok or cancel text\n-->\n<template>\n  <v-dialog width=\"auto\" v-model=\"showDialog\">\n    <v-card color=\"white\" v-click-outside=\"{handler: onClickOutside}\">\n      <v-toolbar color=\"primary\">\n        <v-card-title>\n          <span>Are you sure ?</span>\n        </v-card-title>\n      </v-toolbar>\n      <div class=\"d-flex justify-center\">\n        <v-card width=\"450px\">\n          <v-card-title class=\"text-h6 text-md-h5 text-lg-h4\">{{Id}}</v-card-title>\n          <v-card-text>\n            {{Msg}}\n          </v-card-text>\n        </v-card>\n      </div>\n      <v-card-actions class=\"justify-end\">        \n        <v-btn variant=\"elevated\" size=\"large\" @click=\"uploadDialog\">上 傳</v-btn>\n        <v-btn variant=\"elevated\" size=\"large\" @click=\"deleteDialog\">刪 除</v-btn>\n        <v-divider class=\"mx-3\" vertical></v-divider>\n        <v-btn variant=\"elevated\" size=\"large\" @click=\"cancelDialog\">\n          <template v-slot:prepend>\n            <v-icon color=\"success\"></v-icon>\n          </template>\n          取 消\n        </v-btn>\n      </v-card-actions> \n    </v-card>\n  </v-dialog>\n</template>\n\n<script>\n  export default {\n  data() {\n    return {\n        dialogData:null\n    }\n  },\n  watch: {\n      msg: function(){\n          // only show the dialog if msg.payload is an object and the socket id in the message\n          // matches our socket id (which means the popup was initiated from this session) or\n          // there is no _client property present which indicates it should be shown on all sessions.\n          if (typeof this.msg.payload === \"object\" && (!this.msg._client || this.msg._client.socketId === this.$socket.id)) {                  \n              this.dialogData = this.msg.payload;              \n              this.dialogData.show = true\n          }\n          // prevent redraw on deploy\n          //this.msg.payload = null\n      }\n  },\n  methods:{\n    uploadDialog:function(){\n      this.dialogData.show = false;\n      this.msg.topic = 'upload';\n      this.send(this.msg);\n    },\n    cancelDialog:function(){\n      this.dialogData.show = false;\n      this.msg.topic = 'cancel';   \n      this.send(this.msg);   \n    },\n    deleteDialog:function(){\n      this.dialogData.show = false;\n      this.msg.topic = 'delete';\n      this.send(this.msg);\n    },\n    onClickOutside () {\n     \n    },\n  },\n  computed : {    \n    Id: function (){\n      return this.dialogData?.id\n    },    \n    Msg:function(){\n      return this.dialogData?.msg\n    },\n    showDialog: function (){\n      return this.dialogData?.show === true\n    }\n  },\n  unmounted () {\n    this.dialogData = null\n  }\n}\n</script>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "widget:ui",
+        "className": "",
+        "x": 350,
+        "y": 720,
+        "wires": [
+            [
+                "77d19459b91d2d5a"
+            ]
+        ]
+    },
+    {
+        "id": "20c5c2c3d508e2f5",
+        "type": "debug",
+        "z": "c12c6896a3e5a055",
+        "g": "e1e23ff3fe8840c5",
+        "name": "debug 359",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "d420d3cea7e33da4",
+        "type": "link out",
+        "z": "c12c6896a3e5a055",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "89699cc7034f3dde"
+        ],
+        "x": 995,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d2e3d1a1f39c850a",
+        "type": "debug",
+        "z": "c12c6896a3e5a055",
+        "g": "e1e23ff3fe8840c5",
+        "name": "debug 8",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "d7bc10d04e0fda5a",
+        "type": "uib-sender",
+        "z": "c12c6896a3e5a055",
+        "g": "e1e23ff3fe8840c5",
+        "url": "marquee",
+        "uibId": "3c413577cdbd52e7",
+        "name": "",
+        "topic": "",
+        "passthrough": false,
+        "return": false,
+        "outputs": 0,
+        "x": 680,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "89699cc7034f3dde",
+        "type": "link in",
+        "z": "c12c6896a3e5a055",
+        "g": "e1e23ff3fe8840c5",
+        "name": "link in 4",
+        "links": [
+            "d420d3cea7e33da4"
+        ],
+        "x": 185,
+        "y": 740,
+        "wires": [
+            [
+                "f7ca92f1a3e1022b",
+                "d2e3d1a1f39c850a"
+            ]
+        ]
+    },
+    {
+        "id": "73485407043617e9",
+        "type": "comment",
+        "z": "c12c6896a3e5a055",
+        "g": "e1e23ff3fe8840c5",
+        "name": "Dialogs",
+        "info": "",
+        "x": 350,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "77d19459b91d2d5a",
+        "type": "switch",
+        "z": "c12c6896a3e5a055",
+        "g": "e1e23ff3fe8840c5",
+        "name": "Topic?",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "cancel",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 740,
+        "wires": [
+            [
+                "d7bc10d04e0fda5a",
+                "20c5c2c3d508e2f5"
+            ]
+        ],
+        "outputLabels": [
+            "cancel"
+        ]
+    },
+    {
+        "id": "3c413577cdbd52e7",
+        "type": "uibuilder",
+        "z": "c12c6896a3e5a055",
+        "name": "",
+        "topic": "",
+        "url": "marquee",
+        "okToGo": true,
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "blank",
+        "extTemplate": "",
+        "showfolder": false,
+        "reload": false,
+        "sourceFolder": "src",
+        "deployedVersion": "7.1.0",
+        "showMsgUib": false,
+        "title": "",
+        "descr": "",
+        "editurl": "vscode://file\\Users\\info\\.node-red\\uibuilder/marquee/?windowId=_blank",
+        "x": 810,
+        "y": 100,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "50745a3fddb8a49e",
+        "type": "ui-group",
+        "name": "訊息表",
+        "page": "4a3e5c66d6086fee",
+        "width": "12",
+        "height": "1",
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "cb79bc4520925e32",
+        "type": "ui-base",
+        "name": "My UI",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control",
+            "ui-text"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "titleBarStyle": "default",
+        "showReconnectNotification": false,
+        "notificationDisplayTime": 5,
+        "showDisconnectNotification": false
+    },
+    {
+        "id": "8c3173ee8b65ede4",
+        "type": "ui-group",
+        "name": "Message Details",
+        "page": "3c09c41d22450231",
+        "width": "6",
+        "height": "1",
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "4a3e5c66d6086fee",
+        "type": "ui-page",
+        "name": "訊息管理",
+        "ui": "cb79bc4520925e32",
+        "path": "/page15",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "0d92c765bfad87e6",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "3c09c41d22450231",
+        "type": "ui-page",
+        "name": "Message Details",
+        "ui": "cb79bc4520925e32",
+        "path": "/userdetails",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "0d92c765bfad87e6",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 2,
+        "className": "",
+        "visible": false,
+        "disabled": false
+    },
+    {
+        "id": "0d92c765bfad87e6",
+        "type": "ui-theme",
+        "name": "Basic Blue Theme",
+        "colors": {
+            "surface": "#4d58ff",
+            "primary": "#0094ce",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px",
+            "density": "default"
+        }
+    }
+]
